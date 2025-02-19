@@ -80,15 +80,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'event_management.wsgi.application'
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'ev-list',
+#         'USER': 'postgres',
+#         'PASSWORD': 'rokon4393ayon',
+#         'HOST': 'localhost',
+#         'PORT': '5432'
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ev-list',
-        'USER': 'postgres',
-        'PASSWORD': 'rokon4393ayon',
-        'HOST': 'localhost',
-        'PORT': '5432'
-    }
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgresql://eventmanager_db_user:gHMbp1HeuJIWmURnsak0Klku6VClSqM5@dpg-cuqrm9rv2p9s73filk80-a.oregon-postgres.render.com/eventmanager_db',
+        conn_max_age=600
+    )
 }
 
 
