@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto text-center mt-12">
+    <h1 class="text-3xl font-semibold text-red-600 mb-4">Delete Event</h1>
+    <p class="text-gray-700">Are you sure you want to delete the event <span class="font-bold">"{{ event.name }}"</span>?</p>
+
+    <form method="post" class="mt-6">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-500 text-white px-5 py-2 rounded-md hover:bg-red-600 transition">Yes, Delete</button>
+        <a href="{% url 'event_list' %}" class="bg-gray-500 text-white px-5 py-2 rounded-md hover:bg-gray-600 ml-2 transition">Cancel</a>
+    </form>
+</div>
+{% endblock %}

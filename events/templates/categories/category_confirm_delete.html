@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-white p-8 rounded-lg shadow-lg text-center max-w-lg mx-auto mt-12">
+    <h1 class="text-3xl font-semibold text-red-600 mb-4">Delete Category</h1>
+    <p class="text-gray-700 text-lg">Are you sure you want to delete <span class="font-semibold">"{{ category.name }}"</span>?</p>
+    <form method="post" class="mt-6">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-all">
+            Yes, Delete
+        </button>
+        <a href="{% url 'category_list' %}" class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition-all ml-3">
+            Cancel
+        </a>
+    </form>
+</div>
+{% endblock %}

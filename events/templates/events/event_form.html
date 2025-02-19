@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto mt-12">
+    <h1 class="text-3xl font-semibold text-gray-900 mb-6">{% if form.instance.id %}Edit Event{% else %}Add New Event{% endif %}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="space-y-4">
+            {{ form.as_p }}
+        </div>
+        <div class="mt-6">
+            <button type="submit" class="bg-blue-500 text-white px-5 py-2 rounded-md hover:bg-blue-600 transition">Save</button>
+            <a href="{% url 'event_list' %}" class="bg-gray-500 text-white px-5 py-2 rounded-md hover:bg-gray-600 ml-2 transition">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
