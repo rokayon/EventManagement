@@ -19,11 +19,11 @@ ALLOWED_HOSTS = ["*"]
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'event-management-bzye.onrender.com',  # Your Render domain
+    'eventmanagement-uvf2.onrender.com',  # Your Render domain
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://event-management-bzye.onrender.com',  # Allow trusted CSRF requests
+    'https://eventmanagement-uvf2.onrender.com',  # Allow trusted CSRF requests
 ]
 
 # Ensure CSRF token is included in all POST forms
