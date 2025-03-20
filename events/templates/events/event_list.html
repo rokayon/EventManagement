@@ -1,40 +1,87 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="container mx-auto px-6 sm:px-8 lg:px-10 py-12">
+  <div class="bg-gradient-to-r from-white to-gray-100 p-10 rounded-xl shadow-2xl text-gray-900">
+    <h1 class="text-4xl font-extrabold text-center mb-8">Event Management Dashboard</h1>
 
-{% block content %}
-<div class="bg-white p-8 rounded-lg shadow-lg max-w-7xl mx-auto mt-8">
-    <h1 class="text-3xl font-semibold text-gray-900 mb-6">Events</h1>
-    
-    <!-- Search & Add Event -->
-    <div class="flex justify-between items-center mb-6">
-        <form method="GET" class="flex">
-            <input type="text" name="q" placeholder="Search events..." class="border p-2 rounded-l-md w-64 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <button type="submit" class="bg-gray-600 text-white px-4 py-2 rounded-r-md hover:bg-gray-700">Search</button>
-        </form>
-        <a href="{% url 'event_create' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">+ Add Event</a>
+    <!-- Add Event Button -->
+    <div class="flex justify-center mb-6">
+      <a
+        href="{% url 'event_create' %}"
+        class="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-3 px-10 rounded-lg text-lg font-bold hover:from-blue-500 hover:to-blue-700 transition-all shadow-md hover:shadow-lg"
+      >
+        ➕ Create Event
+      </a>
     </div>
+
+    <!-- Search Bar -->
+    <form method="GET" class="flex justify-center mb-10">
+      <div class="relative w-full sm:w-2/3 md:w-1/2">
+        <input
+          type="text"
+          name="q"
+          placeholder="Search for an event..."
+          class="w-full px-5 py-3 rounded-md text-gray-900 bg-gray-100 shadow-md border focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+        />
+        <button
+          type="submit"
+          class="absolute right-4 top-3 text-blue-600 text-xl hover:text-blue-800"
+        >
+          🔎
+        </button>
+      </div>
+    </form>
 
     <!-- Events Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {% for event in events %}
-        <div class="border p-5 rounded-lg shadow-md bg-gradient-to-r from-gray-100 to-gray-200 hover:shadow-lg transition-shadow">
-            <h2 class="text-xl font-semibold text-gray-800">{{ event.name }}</h2>
-            <p class="text-gray-600 mt-1">{{ event.description }}</p>
-            <p class="text-sm text-gray-500 mt-2">
-                <span class="font-medium">📅 Date:</span> {{ event.date }} | <span class="font-medium">⏰ Time:</span> {{ event.time }}
-            </p>
-            <p class="text-sm text-gray-500"><span class="font-medium">📍 Location:</span> {{ event.location }}</p>
-            <p class="text-sm text-gray-500"><span class="font-medium">📂 Category:</span> {{ event.category.name }}</p>
-            <p class="text-sm text-gray-500"><span class="font-medium">👥 Participants:</span> {{ event.participant_set.count }}</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {% for event in events %}
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all">
+        <img
+          src="{{ event.asset.url }}"
+          alt="{{ event.name }}"
+          class="w-full h-56 object-cover hover:opacity-90 transition-opacity"
+        />
+        <div class="p-5 space-y-3">
+          <h2 class="text-2xl font-semibold text-gray-900">{{ event.name }}</h2>
+          <p class="text-gray-700 text-sm">{{ event.description }}</p>
+          <div class="text-gray-500 text-sm">
+            <p>📅 {{ event.date }} | 🕒 {{ event.time }}</p>
+            <p>📍 {{ event.location }}</p>
+            <p>🏷 Category: <span class="font-medium">{{ event.category.name }}</span></p>
+          </div>
 
-            <div class="mt-4 flex space-x-2">
-                <a href="{% url 'event_detail' event.id %}" class="bg-green-500 text-white px-3 py-1 rounded">View</a>
-                <a href="{% url 'event_update' event.id %}" class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</a>
-                <a href="{% url 'event_delete' event.id %}" class="bg-red-500 text-white px-3 py-1 rounded">Delete</a>
-            </div>
+          <!-- Action Buttons -->
+          <div class="mt-4 flex justify-between items-center">
+            <a
+              href="{% url 'event_detail' event.id %}"
+              class="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-4 rounded-lg hover:from-blue-600 hover:to-blue-800 transition"
+            >
+              View
+            </a>
+            <a
+              href="{% url 'event_update' event.id %}"
+              class="bg-gradient-to-r from-blue-300 to-blue-500 text-white py-2 px-4 rounded-lg hover:from-blue-600 hover:to-blue-800 transition"
+            >
+              Edit
+            </a>
+            <a
+              href="{% url 'event_delete' event.id %}"
+              class="bg-gradient-to-r from-blue-200 to-blue-400 text-white py-2 px-4 rounded-lg hover:from-blue-600 hover:to-blue-800 transition"
+            >
+              Delete
+            </a>
+            <a
+              href="{% url 'rsvp_event' event.id %}"
+              class="bg-gradient-to-r from-blue-500 to-blue-700 text-white py-2 px-4 rounded-lg hover:from-blue-600 hover:to-blue-800 transition"
+            >
+              RSVP
+            </a>
+          </div>
         </div>
-        {% empty %}
-        <p class="text-gray-500 text-lg">No events found.</p>
-        {% endfor %}
+      </div>
+      {% empty %}
+      <p class="text-center text-gray-500 col-span-full text-lg font-medium">No events available.</p>
+      {% endfor %}
     </div>
+  </div>
 </div>
 {% endblock %}

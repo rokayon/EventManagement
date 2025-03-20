@@ -1,0 +1,88 @@
+{% extends "admin/ad-base.html" %}
+{% block content %}
+<div class="max-w-2xl mx-auto p-6">
+    <!-- Display Messages -->
+    {% if messages %}
+        <ul class="mb-6" aria-live="polite">
+            {% for message in messages %}
+                <li class="bg-green-500 text-white px-4 py-2 mb-2 rounded-lg">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- Assign User Role Form -->
+    <div class="bg-white shadow-lg rounded-2xl p-8">
+        <h2 class="text-3xl font-bold mb-8 text-gray-800">Creating Groups</h2>
+
+        <form method="POST" class="space-y-6">
+            {% csrf_token %}
+
+            <div class="space-y-4">
+                <!-- Custom Styling for the Name Field -->
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Group Name
+                    </label>
+                    <input
+                        type="text"
+                        name="{{ form.name.name }}"
+                        id="{{ form.name.id_for_label }}"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                        placeholder="Enter group name"
+                        value="{{ form.name.value|default:'' }}"
+                    >
+                </div>
+
+                <!-- Render the Permissions Field -->
+                <div class="form-group">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Permissions
+                    </label>
+                    <div class="space-y-2">
+                        {% for permission in form.permissions %}
+                            <label class="flex items-center space-x-3">
+                                {{ permission.tag }}
+                                <span class="text-gray-700">{{ permission.choice_label }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Select All Button -->
+            <button
+                type="button"
+                id="select-all"
+                class="mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-200"
+            >
+                Select All
+            </button>
+
+            <!-- Submit Button -->
+            <button
+                type="submit"
+                class="w-full px-6 py-3 text-white bg-blue-600 hover:bg-blue-700 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300"
+            >
+                Create Group
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const selectAllButton = document.getElementById('select-all');
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+        selectAllButton.addEventListener('click', function () {
+            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = !allChecked;
+            });
+
+            selectAllButton.textContent = allChecked ? 'Select All' : 'Deselect All';
+        });
+    });
+</script>
+{% endblock content %}

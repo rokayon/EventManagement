@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restricted Access</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <style>
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .animate-slide {
+            animation: slideUp 0.8s ease-out;
+        }
+        .bg-gradient {
+            background: linear-gradient(120deg, #4B5563, #1F2937);
+        }
+    </style>
+</head>
+<body class="bg-gray-200 flex items-center justify-center min-h-screen">
+    <div class="bg-gradient text-white p-10 rounded-xl shadow-2xl text-center animate-slide max-w-md">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-yellow-400 mx-auto mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-12.728 12.728M5.636 5.636l12.728 12.728" />
+        </svg>
+        <h2 class="text-3xl font-extrabold mb-3">Entry Restricted</h2>
+        <p class="text-gray-200 text-lg">Sorry, you lack the clearance to access this area.</p>
+    </div>
+</body>
+</html>

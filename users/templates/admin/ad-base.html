@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 text-gray-900">
+    <header class="bg-blue-600 text-white shadow-md">
+      <nav class="container mx-auto p-4 flex justify-between items-center">
+        <a href="{% url 'admin-dashboard' %}" class="text-xl font-semibold">Event Manager</a>
+        <div class="hidden md:flex space-x-6">
+          <a href="{% url 'admin-dashboard' %}" class="hover:underline">Dashboard</a>
+          <a href="{% url 'event_create' %}" class="hover:underline">Create Event</a>
+          <a href="{% url 'group-list' %}" class="hover:underline">Groups</a>
+          <a href="{% url 'create-group' %}" class="hover:underline">Create Group</a>
+        </div>
+        <div class="relative">
+          <button id="user-menu-button" class="focus:outline-none">
+            <img class="h-10 w-10 rounded-full border" src="https://placekitten.com/100/100" alt="User" />
+          </button>
+          <div id="user-menu" class="absolute right-0 mt-2 bg-gray-500 shadow-lg rounded-md py-2 hidden">
+            <a href="{% url 'dashboard' %}" class="block text-black px-4 py-2 hover:bg-green-200">Dashboard</a>
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button class="block  text-black px-4 py-2 w-full text-left hover:bg-red-200">Logout</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="container mx-auto p-6">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="bg-green-500 text-white p-3 rounded mb-4">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+      {% block content %}{% endblock content %}
+    </main>
+    <footer class="bg-gray-900 text-gray-400 text-center py-6 mt-12">
+      &copy; 2025 Event Manager. All rights reserved.
+    </footer>
+    <script>
+      document.getElementById("user-menu-button").addEventListener("click", function () {
+        document.getElementById("user-menu").classList.toggle("hidden");
+      });
+    </script>
+  </body>
+</html>

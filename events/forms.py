@@ -1,5 +1,5 @@
 from django import forms
-from .models import Event, Category, Participant
+from .models import Event, Category
 class StyleFromMixin:
     '''Mixin to apply styles to from fields'''
     default_classes= "border-2 border-gray-400 w-full rounded-lg shadow-sm focus:border-rose-500 focus:ring-rose-500 focus:outline-none"
@@ -33,7 +33,7 @@ class StyleFromMixin:
 class EventForm(StyleFromMixin,forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['name', 'description', 'date', 'time', 'location', 'category']
+        fields = ['name', 'description', 'date', 'time', 'location', 'category','asset','participants']
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
             'time': forms.TimeInput(attrs={'type': 'time'}),
@@ -50,16 +50,3 @@ class CategoryForm(StyleFromMixin,forms.ModelForm):
          super().__init__(*arg,**kwargs)
          self.apply_style_widgets()
 
-class ParticipantForm(StyleFromMixin,forms.ModelForm):
-    events = forms.ModelMultipleChoiceField(
-        queryset=Event.objects.all(),
-        widget=forms.CheckboxSelectMultiple,  
-        required=False
-    )
-
-    class Meta:
-        model = Participant
-        fields = ['name', 'email', 'events']
-    def __init__(self,*arg,**kwargs):
-         super().__init__(*arg,**kwargs)
-         self.apply_style_widgets()
